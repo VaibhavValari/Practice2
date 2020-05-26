@@ -1,0 +1,13 @@
+[debug] [2020-04-08T17:08:43.422Z] ----------------------------------------------------------------------
+[debug] [2020-04-08T17:08:43.429Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\vaibhav\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2020-04-08T17:08:43.430Z] CLI Version:   8.0.2
+[debug] [2020-04-08T17:08:43.430Z] Platform:      win32
+[debug] [2020-04-08T17:08:43.430Z] Node Version:  v12.16.1
+[debug] [2020-04-08T17:08:43.432Z] Time:          Wed Apr 08 2020 10:08:43 GMT-0700 (Pacific Daylight Time)
+[debug] [2020-04-08T17:08:43.434Z] ----------------------------------------------------------------------
+[debug] [2020-04-08T17:08:43.435Z] 
+[debug] [2020-04-08T17:08:43.466Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-08T17:08:43.468Z] > authorizing via signed-in user
+[debug] [2020-04-08T17:08:43.470Z] [iam] checking project servic-68add for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2020-04-08T17:08:43.483Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/servic-68add:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}

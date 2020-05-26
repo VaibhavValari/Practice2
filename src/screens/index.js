@@ -1,0 +1,16 @@
+export { default as HomeScreen } from './HomeScreen';
+export { default as LoginScreen } from './LoginScreen';
+export { default as RegisterScreen } from './RegisterScreen';
+export { default as ForgotPasswordScreen } from './ForgotPasswordScreen';
+export { default as Dashboard } from './Dashboard';
+export { default as Profile } from './Profile';
+export { default as SetupProfile } from './SetupProfile';
+export { default as SplashScreen } from './SplashScreen';
+export { default as UpdateProfile } from './UpdateProfile';
+export { default as MessageInboxScreen } from './MessageInboxScreen';
+export { default as DetailScreen } from './DetailScreen';
+export { default as PendingScreen } from './PendingScreen';
+export { default as MapScreen } from './MapScreen';
+export { default as MapScreen1 } from './MapScreen1';
+export { default as Appointments } from './Appointments';
+export { default as CompletedScreen } from './CompletedScreen';
