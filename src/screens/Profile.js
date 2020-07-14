@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { ListItem } from 'react-native-elements';
+import { ListItem, colors } from 'react-native-elements';
 import Background from "../components/Background";
 import {
   StyleSheet,
@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import auth, { firebase } from "@react-native-firebase/auth";
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
+//import { Colors } from "react-native/Libraries/NewAppScreen";
+import color from '../core/colors';
 
 const Profile = ({ navigation }) => {
   const [currentEmail, setCurrentEmail] = useState("");
@@ -63,9 +65,9 @@ const Profile = ({ navigation }) => {
     const userrr = auth().currentUser.uid;
     const db = database().ref(`technician/${userrr}/`).on('value', snapshot => {
       setAddress(snapshot.val().address),
-      setAge(snapshot.val().birthDate),
-      setPhone(snapshot.val().contact),
-      setCompany(snapshot.val().company)
+        setAge(snapshot.val().birthDate),
+        setPhone(snapshot.val().contact),
+        setCompany(snapshot.val().company)
     });
     return () => { db };
   });
@@ -73,9 +75,22 @@ const Profile = ({ navigation }) => {
   //Firebase Auth
   const user = auth().currentUser.user;
   const logoutHandler = async () => {
-    await auth().signOut();
-    navigation.navigate("HomeScreen");
+    await
+      auth()
+        .signOut()
+        .then(() => {
+          logOut();
+        });
   };
+
+  const logOut = () => {
+    auth()
+    .onAuthStateChanged(user => {
+      if (!user) {
+        navigation.navigate("HomeScreen");
+      }
+    })
+  }
 
   return (
     <ScrollView>
@@ -83,7 +98,7 @@ const Profile = ({ navigation }) => {
       <View style={styles.image}>
         {timeout ?
           <View >
-            <ActivityIndicator color='violet' size='large' /></View>
+            <ActivityIndicator color={"black"} size='large' /></View>
           : <Image source={{ uri: url }} style={styles.imag} />
         }
       </View>
@@ -94,13 +109,13 @@ const Profile = ({ navigation }) => {
       <View style={styles.textC}>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.text}>Your Address:</Text>
-          <Text style={styles.text1}>{address}</Text>
+          <Text numberOfLines={2} style={styles.text1}>{address}</Text>
         </View>
-        <Text style={styles.text}>Date of Birth:    {age}</Text>
-        <Text style={styles.text}>Contact No:      {phone}</Text>
-        <Text style={styles.text}>Company:          {company}</Text>
+        <Text style={styles.text}>Date of Birth:   {age}</Text>
+        <Text style={styles.text}>Contact No:     {phone}</Text>
+        <Text style={styles.text}>Company:        {company}</Text>
       </View>
-      <Button style={{ backgroundColor: "#600EE6", width: "60%", alignSelf: "center", marginTop: 100, }} mode="outlined" onPress={logoutHandler}>
+      <Button style={{ backgroundColor: "white", width: "60%", alignSelf: "center", marginTop: 20, borderColor: color.primary, borderWidth: 1.5 }} mode="outlined" onPress={logoutHandler}>
         Logout
       </Button>
     </ScrollView>
@@ -115,6 +130,14 @@ Profile.navigationOptions = ({ navigation }) => {
   }
   return {
     headerTitle: 'Profile',
+    headerStyle: {
+      elevation: 0,
+      backgroundColor: color.primary
+    },
+    headerTitleStyle: {
+      marginTop: 20,
+      fontFamily: "bbol"
+    },
     headerRight: () => <Icon style={styles.images} name="md-create" size={23} onPress={hii} />
   }
 };
@@ -123,10 +146,11 @@ const styles = StyleSheet.create({
   images: {
     width: 24,
     height: 24,
+    marginTop: 20
   },
   text: {
     fontSize: 17,
-    fontFamily: 'verdana',
+    fontFamily: 'breg',
     padding: 10,
     color: "grey",
     textAlign: "left",
@@ -134,7 +158,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: 17,
-    fontFamily: 'verdana',
+    fontFamily: 'breg',
     textAlign: "left",
     paddingVertical: 10,
     width: 150,
@@ -145,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginTop: 20,
-    paddingTop: 80,
+    paddingTop: 40,
     paddingBottom: 50,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -155,12 +179,13 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     elevation: 1,
     marginHorizontal: 20,
+    alignSelf:"center"
   },
   name: {
     fontSize: 24,
     textAlign: "center",
     justifyContent: "flex-start",
-    textShadowRadius: 5,
+    fontFamily: "bbol",
     marginTop: 90,
     flex: 1
   },
@@ -180,7 +205,8 @@ const styles = StyleSheet.create({
   Add: {
     fontSize: 16,
     alignSelf: 'center',
-    justifyContent: "center"
+    justifyContent: "center",
+    fontFamily: "breg"
   },
   image: {
     width: 130,
@@ -192,7 +218,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: "center",
     position: 'absolute',
-    marginTop: 90,
+    marginTop: 40,
     elevation: 5,
   },
   imag: {
@@ -204,8 +230,8 @@ const styles = StyleSheet.create({
 
   },
   header: {
-    backgroundColor: "#7530ff",
-    height: 150,
+    backgroundColor: color.primary,
+    height: 100,
     borderBottomColor: "black",
     elevation: 4
   }

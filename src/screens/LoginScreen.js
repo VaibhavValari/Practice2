@@ -12,6 +12,7 @@ import { emailValidator, passwordValidator } from "../core/utils";
 import ErrorModal from '../components/ErrorModal';
 import LottieView from 'lottie-react-native';
 import auth, { firebase } from "@react-native-firebase/auth";
+import colors from "../core/colors";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -75,7 +76,10 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button 
+      style={{ backgroundColor: colors.accentLight, width: "60%", alignSelf: "center", marginTop: 20, borderColor: colors.primary, borderWidth: 1.5 }}
+      mode="outlined"
+      onPress={_onLoginPressed}>
         Login
       </Button>
       <View style={styles.row}>
@@ -107,11 +111,11 @@ const styles = StyleSheet.create({
     marginTop: 4
   },
   label: {
-    color: theme.colors.secondary
+    color: colors.primary
   },
   link: {
     fontWeight: "bold",
-    color: theme.colors.primary
+    color: colors.primary
   }
 });
 

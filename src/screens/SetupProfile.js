@@ -13,17 +13,19 @@ import Button from '../components/Button';
 import Profile from '../screens/Profile';
 import ImagePicker from 'react-native-image-picker';
 import AnimatedLoader from 'react-native-animated-loader';
+import colors from '../core/colors';
 
 
-const options = {
-  title: 'Select Image',
-  storageOptions: {
-    skipBackup: true,
-    path: 'images'
-  }
-};
+
 
 const SetupProfile = ({ navigation }) => {
+  const options = {
+    title: 'Select Image',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images'
+    }
+  };
 
   const [name, setName] = useState("");
   const [number, setNumber] = useState({ value: "" });
@@ -104,7 +106,7 @@ const SetupProfile = ({ navigation }) => {
       return (
         <Image source={{ uri: 'data:image/jpeg;base64,' + image }}
           style={{
-            width: 125, height: 132,
+            width: 125, height: 125,
             justifyContent: "center",
             borderRadius: 100,
             borderWidth: 3
@@ -155,8 +157,9 @@ const SetupProfile = ({ navigation }) => {
         confirmBtnText="Confirm"
         onDateChange={date => { setDob({ value: date }) }}
         returnKeyType="next" />
-      <Button mode="contained"
-        onPress={addData} style={styles.button}>
+      <Button style={{ backgroundColor: colors.accentLight, width: "60%", alignSelf: "center", marginTop: 20, borderColor: colors.primary, borderWidth: 1.5 }}
+        mode="outlined"
+        onPress={addData}>
         Next
         </Button>
       <AnimatedLoader

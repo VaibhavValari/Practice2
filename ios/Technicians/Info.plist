@@ -71,6 +71,19 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
+		<string>ProductSans-Black.ttf</string>
+		<string>ProductSans-Regular.ttf</string>
+		<string>fontawesome.ttf</string>
+		<string>opensans_bold.ttf</string>
+		<string>opensans_regular.ttf</string>
+		<string>productsans_black.ttf</string>
+		<string>productsans_regular.ttf</string>
+		<string>BalsamiqSans-BoldItalic.ttf</string>
+		<string>BalsamiqSans-Italic.ttf</string>
+		<string>bbol.ttf</string>
+		<string>breg.ttf</string>
 	</array>
 </dict>
 </plist>

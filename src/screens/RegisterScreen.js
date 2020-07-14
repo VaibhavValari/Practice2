@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity,Keyboard } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
@@ -14,6 +14,7 @@ import {
 } from "../core/utils";
 import AnimatedLoader from 'react-native-animated-loader';
 import auth, { firebase } from "@react-native-firebase/auth";
+import colors from "../core/colors";
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -31,8 +32,10 @@ const RegisterScreen = ({ navigation }) => {
           displayName: name.value
         });
       })
+      .then(() => {
+        navigation.navigate("SetupProfile")
+      })
       .catch(e => console.error(e.message + "  Register: " + name));
-    navigation.navigate("SetupProfile")
   };
 
   const _onSignUpPressed = () => {
@@ -85,7 +88,8 @@ const RegisterScreen = ({ navigation }) => {
         errorText={password.error}
         secureTextEntry
       />
-      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+      <Button style={{ backgroundColor: colors.accentLight, width: "60%", alignSelf: "center", marginTop: 20, borderColor: colors.primary, borderWidth: 1.5 }}
+        mode="outlined" onPress={_onSignUpPressed}>
         Sign Up
       </Button>
       <View style={styles.row}>
@@ -106,7 +110,7 @@ const RegisterScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   label: {
-    color: theme.colors.secondary
+    color: colors.primary
   },
   button: {
     marginTop: 24
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: "bold",
-    color: theme.colors.primary
+    color: colors.primary
   }
 });
 

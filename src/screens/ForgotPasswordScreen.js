@@ -36,7 +36,10 @@ const ForgotPasswordScreen = ({ navigation }) => {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
-      <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
+      <Button
+        style={{ backgroundColor: "white", width: "60%", alignSelf: "center", marginTop: 20, borderColor: color.primary, borderWidth: 1.5 }}
+        mode="outlined"
+        onPress={_onSendPressed} style={styles.button}>
         Send Reset Instructions
       </Button>
       <TouchableOpacity

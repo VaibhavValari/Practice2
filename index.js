@@ -10,7 +10,6 @@ import messaging from '@react-native-firebase/messaging';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import RNLocation from "react-native-location";
-import React, { useEffect, useState } from 'react';
 
 
 const firebaseConfig = {
@@ -26,22 +25,16 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-//background Handler
+
+
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
-  //remoteMessage is my data object i want to pass to my component
 });
 
 
 
 
-messaging().getToken().then(data => {
-  const uid = auth().currentUser.uid;
-  database().ref(`/technician/${uid}/`).child(`token`).set(data);
-});
-
-RNLocation.getCurrentPermission()
-
+RNLocation.getCurrentPermission();
 
 RNLocation.requestPermission({
   ios: "whenInUse",
@@ -57,7 +50,7 @@ RNLocation.checkPermission({
   android: {
     detail: 'coarse' // or 'fine'
   }
-})
+});
 
 RNLocation.configure({
   distanceFilter: 10, // Meters

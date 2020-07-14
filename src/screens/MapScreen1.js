@@ -8,17 +8,18 @@ import RNLocation from 'react-native-location';
 
 const MapScreen1 = ({ navigation }) => {
 
-    const Lat = navigation.getParam('latitude');
-    const Lon = navigation.getParam('longitude');
-    const userLat = parseFloat(Lat);
-    const userLon = parseFloat(Lon);
-
+    const latLang = navigation.getParam('coords');
+    const nameArr = latLang.split(',');
+    const Lat = nameArr[0];
+    const Lon = nameArr[1];
+    const lat = parseFloat(Lat);
+    const lon = parseFloat(Lon);
     const [region, setRegion] = useState();
     const [coords, setCoords] = useState({ latitude: 15.5102014, longitude: 73.7822279 });
 
     useEffect(() => {
         _checPermission();
-        console.log(coords);
+        //console.log(coords);
     }, []);
 
     const _checPermission = () => {
@@ -76,23 +77,23 @@ const MapScreen1 = ({ navigation }) => {
                 showsUserLocation={true}
                 minZoomLevel={10}
                 showsCompass={false}>
-                <Marker coordinate={{ latitude: userLat, longitude: userLon }} />
+                <Marker coordinate={{ latitude: lat, longitude: lon }} />
                 <MapViewDirections
                     origin={coords}
-                    destination={{ latitude: userLat, longitude: userLon }}
+                    destination={{ latitude: lat, longitude: lon }}
                     apikey={'AIzaSyBhsYbmkBufF5SW-nb2tEsHKSV5A6J1_u8'}
                     strokeWidth={5}
                     strokeColor="red" />
             </MapView>
-            
+
         </View>
 
 
     )
 };
-MapScreen1.navigationOptions = ({navigation}) =>{
+MapScreen1.navigationOptions = ({ navigation }) => {
     return {
-        headerTitle:"MapView"
-}
+        headerTitle: "MapView"
+    }
 };
 export default MapScreen1;

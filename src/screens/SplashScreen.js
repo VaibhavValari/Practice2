@@ -1,32 +1,30 @@
-import React, { memo, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
-import Header from "../components/Header";
-import Button from "../components/Button";
-import Paragraph from "../components/Paragraph";
-
 import auth from "@react-native-firebase/auth";
-
-
-
-
-
+import { ActivityIndicator } from 'react-native';
+import colors from "../core/colors";
 
 const SplashScreen = ({ navigation }) => {
-  useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged(user => {
-      console.log(user);
-      navigation.navigate(user ? 'App' : "Auth");
-    });
 
-    return () => {
-      unsubscribe();
-    };
-  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      checkUser();
+    }, 5000);
+  }, []);
+
+  const checkUser = () => {
+    auth().onAuthStateChanged(user => {
+      console.log(user);
+      user ? navigation.navigate('App') : navigation.navigate('Auth');
+    });
+  }
 
   return (
     <Background>
       <Logo />
+      <ActivityIndicator size="large" color={colors.accent} />
     </Background>
   );
 };

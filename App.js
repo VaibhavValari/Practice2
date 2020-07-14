@@ -24,6 +24,7 @@ if (!firebase.apps.length) {
 
 const Main = () => {
 
+  console.disableYellowBox =true;
   return (
     <Provider theme={theme}>
       <App />

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { Portal } from "react-native-paper";
-import Button from '../components/Button';
+
 import { theme } from "../core/theme";
 
 
@@ -68,12 +68,6 @@ const ErrorModal = (props) => {
         </TouchableWithoutFeedback>
         <Animated.View style={{ ...styles.cardContainer, bottom: slide }}>
           {props.children}
-          <Button
-            onPress={props.onPress}
-            mode="contained"
-            style={styles.button}>
-            okay
-          </Button>
         </Animated.View>
       </Animated.View>
     </Portal>
@@ -120,11 +114,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "rgba(0,0,0,0.4)",
-  },
-  button: {
-    width: "60%",
-    alignSelf: "center",
-    margin: 6,
   },
 });
 

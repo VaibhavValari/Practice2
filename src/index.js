@@ -1,9 +1,11 @@
-import React from "react";
+import React,{ useState,useEffect} from "react";
 import { StyleSheet } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
+import messaging from '@react-native-firebase/messaging';
+import Color from './core/colors';
 import {
   SplashScreen,
   HomeScreen,
@@ -22,7 +24,6 @@ import {
   Appointments,
   CompletedScreen
 } from "./screens";
-
 
 const AppNav = createStackNavigator({
   Home: { screen: Dashboard },
@@ -73,7 +74,7 @@ const ProfileNav = createStackNavigator({
 },
   {
     initialRouteName: "Profile",
-    activeColor: "#600EE6",
+    activeColor: Color.primary,
     inactiveColor: "grey",
     barStyle: { backgroundColor: "white" },
     shifting: true
@@ -86,8 +87,8 @@ const BottomTabNav = createMaterialBottomTabNavigator(
       screen: AppNav,
       navigationOptions: {
         tabBarLabel: 'Home',
-        tabBarIcon: tabInfo => {
-          return <Icon name="md-home" size={25} />;
+        tabBarIcon: ({tintColor}) => {
+          return <Icon color={tintColor} name="md-home" size={25} />;
         }
       }
     },
@@ -95,8 +96,8 @@ const BottomTabNav = createMaterialBottomTabNavigator(
       screen: AppointmentsNav,
       navigationOptions: {
         tabBarLabel: 'Appointments',
-        tabBarIcon: tabInfo => {
-          return <Icon name="md-clipboard" size={25} />;
+        tabBarIcon: ({tintColor}) => {
+          return <Icon color={tintColor} name="ios-clipboard" size={25} />;
         }
       }
     },
@@ -105,17 +106,19 @@ const BottomTabNav = createMaterialBottomTabNavigator(
       screen: ProfileNav,
       navigationOptions: {
         tabBarLabel: 'Profile',
-        tabBarIcon: tabInfo => {
-          return <Icon name="md-person" size={25} />;
+        tabBarIcon: ({tintColor}) => {
+          return <Icon color={tintColor} name="md-person" size={25} />;
         },
       }
     }
   },
   {
-    activeColor: "#600EE6",
+    activeColor: Color.primary,
     inactiveColor: "grey",
     barStyle: { backgroundColor: "white" },
-    shifting: true
+    shifting: true,
+    activeTintColor:Color.primary
+
   }
 );
 const Updat = createStackNavigator({

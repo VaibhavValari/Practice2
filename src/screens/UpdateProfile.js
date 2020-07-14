@@ -1,21 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableWithoutFeedback,Keyboard } from 'react-native';
+import { View, Text, TouchableOpacity,Keyboard,StyleSheet,Image } from 'react-native';
 import Background from '../components/Background';
 import Icon from 'react-native-vector-icons/Feather';
-import { TextInput, Avatar, Button } from 'react-native-paper';
+import storage from '@react-native-firebase/storage';
+import { TextInput, Avatar } from 'react-native-paper';
 import { theme } from '../core/theme';
 import { add } from 'react-native-reanimated';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import Button from '../components/Button';
 import {
     emailValidator,
     passwordValidator,
     nameValidator
 } from "../core/utils";
+import colors from '../core/colors';
+import { TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
+import ImagePicker from 'react-native-image-picker';
+
 
 
 const UpdateProfile = ({ navigation }) => {
 
+
+    const options = {
+        title: 'Select Image',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images'
+        }
+      };
+    
     const [name, setName] = useState({ name: "", error: "" });
     const [email, setEmail] = useState({ name: "", error: "" });
     const [address, setAddress] = useState({ name: "", error: "" });
@@ -31,6 +46,7 @@ const UpdateProfile = ({ navigation }) => {
         database().ref(`technician/${techid}/`).child(`company`).set(company.name);
     };
 
+   
     const Validate = () => {
         Keyboard.dismiss();
         const nameError = nameValidator(name.name);
@@ -46,25 +62,87 @@ const UpdateProfile = ({ navigation }) => {
         }
         update();
     }
+    const renderFileData = () => {
+        if (image) {
+          return (
+            <Image source={{ uri: 'data:image/jpeg;base64,' + image }}
+              style={{
+                resizeMode:"contain",
+                width: "100%", height: 132,
+                justifyContent: "center",
+                borderRadius: 100,
+                borderWidth: 3
+              }} />
+          )
+        }
+        else {
+          return (
+            <Avatar.Icon onPress={()=>{console.log("hii")}} style={{
+                alignSelf: "center", justifyContent: "center",
+                elevation: 10, marginVertical: 20,backgroundColor:colors.primary
+            }}
+                size={110} icon="plus" />
+          )
+        }
+      };
+
+      const [image, setImage] = useState(null);
+      const pickImage = () => {
+          return new Promise((resolve, reject) => {
+            ImagePicker.showImagePicker(options, response => {
+              if (response.didCancel) return;
+              if (response.error) {
+                const message = `An error was occurred: ${response.error}`;
+                reject(new Error(message));
+                return;
+              }
+              const { path: uri } = response;
+              resolve(uri);
+              const dataa = response.data;
+              setImage(dataa);
+            });
+          });
+        };
+    
+        const uploadImage = async (fileName, uri) => {
+            const user = auth().currentUser.uid;
+            return new Promise(
+              (resolve, reject) => {
+                storage()
+                  .ref(`Technicians/${user}/${fileName}`)
+                  .putFile(uri)
+                  .then(resolve)
+                  .catch(reject);
+              }
+            );
+          }
+
+      const pickImageAndUpload = async () => {
+        const uri = await pickImage();
+        const fileName = 'Profile_Picture.jpg';
+        await uploadImage(fileName, uri);
+      }
+
     return (
         <View style={{ backgroundColor: "#f1f1f1", height: "100%" }}>
             <View style={{ marginLeft: 20, marginTop: 40 }}>
-                <Text style={{ fontSize: 30, color: "black", fontWeight: "bold", marginBottom: 5 }}>
+                <Text style={{ fontSize: 30, color: "black", fontFamily:"bbol", marginBottom: 5 }}>
                     Update Profile
             </Text>
             </View>
-            <Avatar.Icon style={{
-                alignSelf: "center", justifyContent: "center",
-                elevation: 10, marginVertical: 20
-            }}
-                size={110} icon="plus" />
-
+            <TouchableOpacity onPress={pickImageAndUpload}>
+            <View style={styles.image}>
+                {renderFileData()}
+            </View>
+            </TouchableOpacity>
+                
             <View style={{ marginHorizontal: 15 }}>
                 <TextInput
-                    selectionColor={theme.colors.primary}
+                    selectionColor={colors.primary}
+                    theme={{colors:{primary:colors.primary}}}
                     underlineColor="transparent"
                     mode="outlined"
-                    style={{ marginVertical: 5, height: 50 }}
+                    style={{ marginVertical: 5, height: 50,color:colors.primary }}
                     label='Name'
                     value={name.name}
                     onChangeText={text => setName({ name: text, error: "" })}
@@ -73,7 +151,8 @@ const UpdateProfile = ({ navigation }) => {
                     errorText={name.error}
                 />
                 <TextInput
-                    selectionColor={theme.colors.primary}
+                theme={{colors:{primary:colors.primary}}}
+                    selectionColor={colors.primary}
                     underlineColor="transparent"
                     mode="outlined"
                     style={{ marginVertical: 5, height: 50 }}
@@ -85,7 +164,8 @@ const UpdateProfile = ({ navigation }) => {
                     errorText={email.error}
                 />
                 <TextInput
-                    selectionColor={theme.colors.primary}
+                    selectionColor={colors.primary}
+                    theme={{colors:{primary:colors.primary}}}
                     underlineColor="transparent"
                     mode="outlined"
                     style={{ marginVertical: 5, height: 50 }}
@@ -97,10 +177,11 @@ const UpdateProfile = ({ navigation }) => {
                     errorText={address.error}
                 />
                 <TextInput
-                    selectionColor={theme.colors.primary}
+                    selectionColor={colors.primary}
                     underlineColor="transparent"
+                    theme={{colors:{primary:colors.primary}}}
                     mode="outlined"
-                    style={{ marginVertical: 5, marginBottom: 20, height: 50 }}
+                    style={{ marginVertical: 5, height: 50 }}
                     label='Contact'
                     value={contact.name}
                     onChangeText={text => setContact({ name: text, error: "" })}
@@ -109,9 +190,10 @@ const UpdateProfile = ({ navigation }) => {
                     errorText={contact.error}
                 />
                 <TextInput
-                    selectionColor={theme.colors.primary}
+                    selectionColor={colors.primary}
                     underlineColor="transparent"
                     mode="outlined"
+                    theme={{colors:{primary:colors.primary}}}
                     style={{ marginVertical: 5, marginBottom: 20, height: 50 }}
                     label='Company'
                     value={company.name}
@@ -120,7 +202,7 @@ const UpdateProfile = ({ navigation }) => {
                     error={!!company.error}
                     errorText={company.error}
                 />
-                <Button mode="contained" onPress={Validate}>
+                <Button style={{width:250, backgroundColor:"white",borderColor:colors.primary,borderWidth:1.5,elevation:1,alignSelf:"center"}} mode="outlined" onPress={Validate}>
                     Save
                 </Button>
 
@@ -138,5 +220,19 @@ const UpdateProfile = ({ navigation }) => {
         </View>
     );
 };
+const styles = StyleSheet.create({
+    image: {
+        width: 130,
+        height: 130,
+        borderRadius: 100,
+        marginLeft: 5,
+        borderColor: "white",
+        justifyContent: "center",
+        alignContent: "center",
+        alignSelf: "center",
+        alignItems: "center",
+        overflow:"hidden"
+      }
+})
 
 export default UpdateProfile;
