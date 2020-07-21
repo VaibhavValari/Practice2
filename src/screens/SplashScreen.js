@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import auth from "@react-native-firebase/auth";
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from "react-native";
 import colors from "../core/colors";
 
 const SplashScreen = ({ navigation }) => {
-
-
   useEffect(() => {
     setTimeout(() => {
       checkUser();
@@ -15,11 +13,11 @@ const SplashScreen = ({ navigation }) => {
   }, []);
 
   const checkUser = () => {
-    auth().onAuthStateChanged(user => {
+    auth().onAuthStateChanged((user) => {
       console.log(user);
-      user ? navigation.navigate('App') : navigation.navigate('Auth');
+      user ? navigation.navigate("App") : navigation.navigate("Auth");
     });
-  }
+  };
 
   return (
     <Background>

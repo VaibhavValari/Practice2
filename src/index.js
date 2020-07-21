@@ -1,11 +1,11 @@
-import React,{ useState,useEffect} from "react";
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
-import messaging from '@react-native-firebase/messaging';
-import Color from './core/colors';
+import messaging from "@react-native-firebase/messaging";
+import Color from "./core/colors";
 import {
   SplashScreen,
   HomeScreen,
@@ -22,62 +22,62 @@ import {
   MapScreen,
   MapScreen1,
   Appointments,
-  CompletedScreen
+  CompletedScreen,
 } from "./screens";
 
-const AppNav = createStackNavigator({
-  Home: { screen: Dashboard },
-},
+const AppNav = createStackNavigator(
   {
-    headerMode: 'float',
-    HeaderTitle: "null"
+    Home: { screen: Dashboard },
+  },
+  {
+    headerMode: "float",
+    HeaderTitle: "null",
   }
 );
-const AppointmentsNav = createStackNavigator({
-  Appointments: { screen: Appointments },
-  
-},
+const AppointmentsNav = createStackNavigator(
   {
-    headerMode: 'float',
-    HeaderTitle: "null"
+    Appointments: { screen: Appointments },
+  },
+  {
+    headerMode: "float",
+    HeaderTitle: "null",
   }
 );
 const appoint = createStackNavigator({
   PendingScreen,
-  MapScreen
+  MapScreen,
 });
 const appoint1 = createStackNavigator({
-  CompletedScreen
+  CompletedScreen,
 });
 
-const inbox = createStackNavigator({
-  MessageInboxScreen,
-},
+const inbox = createStackNavigator(
   {
-    headerMode: 'none',
+    MessageInboxScreen,
+  },
+  {
+    headerMode: "none",
     headerLayoutPreset: "center",
     HeaderTitleStyle: {
-      color: "white"
-    }
-
-  });
+      color: "white",
+    },
+  }
+);
 const chat = createStackNavigator({
   DetailScreen,
-  MapScreen1
+  MapScreen1,
 });
 
-
-
-
-const ProfileNav = createStackNavigator({
-  Profile: { screen: Profile },
-},
+const ProfileNav = createStackNavigator(
+  {
+    Profile: { screen: Profile },
+  },
   {
     initialRouteName: "Profile",
     activeColor: Color.primary,
     inactiveColor: "grey",
     barStyle: { backgroundColor: "white" },
-    shifting: true
+    shifting: true,
   }
 );
 
@@ -86,60 +86,61 @@ const BottomTabNav = createMaterialBottomTabNavigator(
     App: {
       screen: AppNav,
       navigationOptions: {
-        tabBarLabel: 'Home',
-        tabBarIcon: ({tintColor}) => {
+        tabBarLabel: "Home",
+        tabBarIcon: ({ tintColor }) => {
           return <Icon color={tintColor} name="md-home" size={25} />;
-        }
-      }
+        },
+      },
     },
     ap: {
       screen: AppointmentsNav,
       navigationOptions: {
-        tabBarLabel: 'Appointments',
-        tabBarIcon: ({tintColor}) => {
+        tabBarLabel: "Appointments",
+        tabBarIcon: ({ tintColor }) => {
           return <Icon color={tintColor} name="ios-clipboard" size={25} />;
-        }
-      }
+        },
+      },
     },
 
     Profile: {
       screen: ProfileNav,
       navigationOptions: {
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({tintColor}) => {
+        tabBarLabel: "Profile",
+        tabBarIcon: ({ tintColor }) => {
           return <Icon color={tintColor} name="md-person" size={25} />;
         },
-      }
-    }
+      },
+    },
   },
   {
     activeColor: Color.primary,
     inactiveColor: "grey",
     barStyle: { backgroundColor: "white" },
     shifting: true,
-    activeTintColor:Color.primary
-
+    activeTintColor: Color.primary,
   }
 );
-const Updat = createStackNavigator({
-  UpdateProfile
-},
+const Updat = createStackNavigator(
   {
-    headerMode:"none",
-    headerLayoutPreset: "center"
+    UpdateProfile,
+  },
+  {
+    headerMode: "none",
+    headerLayoutPreset: "center",
   }
 );
 
-const Update = createStackNavigator({
-  BottomTabNav,
-  inbox,
-  Updat,
-  appoint,
-  chat,
-  appoint1
-},
+const Update = createStackNavigator(
   {
-    headerMode: 'none'
+    BottomTabNav,
+    inbox,
+    Updat,
+    appoint,
+    chat,
+    appoint1,
+  },
+  {
+    headerMode: "none",
   }
 );
 
@@ -164,12 +165,11 @@ const Main = createSwitchNavigator({
   Auth: AuthNav,
 });
 
-
 const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    width: 120
+    width: 120,
   },
-})
+});
 export default createAppContainer(Main);

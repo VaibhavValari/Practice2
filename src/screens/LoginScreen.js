@@ -1,16 +1,23 @@
 import React, { memo, useState } from "react";
-import { TouchableOpacity,Keyboard , Alert, StyleSheet, Text, View } from "react-native";
+import {
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 import { theme } from "../core/theme";
 import { emailValidator, passwordValidator } from "../core/utils";
-import ErrorModal from '../components/ErrorModal';
-import LottieView from 'lottie-react-native';
+import ErrorModal from "../components/ErrorModal";
+import LottieView from "lottie-react-native";
 import auth, { firebase } from "@react-native-firebase/auth";
 import colors from "../core/colors";
 
@@ -20,15 +27,18 @@ const LoginScreen = ({ navigation }) => {
   const [alert, setAlert] = useState(false);
 
   const loginHandler = async () => {
-    await auth().signInWithEmailAndPassword(email.value, password.value).
-      then(user => {
-        if (user) { navigation.navigate("BottomTabNav"); }
+    await auth()
+      .signInWithEmailAndPassword(email.value, password.value)
+      .then((user) => {
+        if (user) {
+          navigation.navigate("BottomTabNav");
+        }
         return null;
-      }).catch(error => {
-        if (error.code === 'auth/wrong-password') {
+      })
+      .catch((error) => {
+        if (error.code === "auth/wrong-password") {
           setAlert(true);
         }
-
       });
   };
 
@@ -54,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: "" })}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -66,20 +76,30 @@ const LoginScreen = ({ navigation }) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: "" })}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
       />
       <View style={styles.forgotPassword}>
-        <TouchableOpacity onPress={() => navigation.navigate("ForgotPasswordScreen")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+        >
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button 
-      style={{ backgroundColor: colors.accentLight, width: "60%", alignSelf: "center", marginTop: 20, borderColor: colors.primary, borderWidth: 1.5 }}
-      mode="outlined"
-      onPress={_onLoginPressed}>
+      <Button
+        style={{
+          backgroundColor: colors.accentLight,
+          width: "60%",
+          alignSelf: "center",
+          marginTop: 20,
+          borderColor: colors.primary,
+          borderWidth: 1.5,
+        }}
+        mode="outlined"
+        onPress={_onLoginPressed}
+      >
         Login
       </Button>
       <View style={styles.row}>
@@ -88,13 +108,38 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
-      <ErrorModal onPress={() => { setAlert(false) }} toggle={alert}>
-        <View style={{ height: 100, marginTop: 20, width: "100%", }}>
-          <LottieView source={require('../assets/error.json')} autoPlay loop />
+      <ErrorModal
+        onPress={() => {
+          setAlert(false);
+        }}
+        toggle={alert}
+      >
+        <View style={{ height: 100, marginTop: 20, width: "100%" }}>
+          <LottieView source={require("../assets/error.json")} autoPlay loop />
         </View>
-        <Text style={{ fontSize: 25, marginTop: 30, fontWeight: "bold", textAlign: "center" }}>Uh oh!!</Text>
-        <Text style={{ width: "90%", alignSelf: "center", margin: 12, fontSize: 17, fontWeight: "bold", textAlign: "center", color: "rgba(0,0,0,0.4)", }}>
-          Email or Password is Incorrect,Try again</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            marginTop: 30,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Uh oh!!
+        </Text>
+        <Text
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            margin: 12,
+            fontSize: 17,
+            fontWeight: "bold",
+            textAlign: "center",
+            color: "rgba(0,0,0,0.4)",
+          }}
+        >
+          Email or Password is Incorrect,Try again
+        </Text>
       </ErrorModal>
     </Background>
   );
@@ -104,19 +149,19 @@ const styles = StyleSheet.create({
   forgotPassword: {
     width: "100%",
     alignItems: "flex-end",
-    marginBottom: 24
+    marginBottom: 24,
   },
   row: {
     flexDirection: "row",
-    marginTop: 4
+    marginTop: 4,
   },
   label: {
-    color: colors.primary
+    color: colors.primary,
   },
   link: {
     fontWeight: "bold",
-    color: colors.primary
-  }
+    color: colors.primary,
+  },
 });
 
 export default LoginScreen;

@@ -1,13 +1,13 @@
-import React, { memo } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { TextInput as Input } from 'react-native-paper';
-import { theme } from '../core/theme';
-import colors from '../core/colors';
+import React, { memo } from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { TextInput as Input } from "react-native-paper";
+import { theme } from "../core/theme";
+import colors from "../core/colors";
 
 const TextInput = ({ errorText, ...props }) => (
   <View style={styles.container}>
     <Input
-      theme={{colors:{primary:colors.primary}}}
+      theme={{ colors: { primary: colors.primary } }}
       selectionColor={colors.primary}
       underlineColor="transparent"
       mode="outlined"
@@ -19,7 +19,7 @@ const TextInput = ({ errorText, ...props }) => (
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
     marginVertical: 12,
   },
   input: {

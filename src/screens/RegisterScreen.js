@@ -1,5 +1,11 @@
 import React, { memo, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Keyboard,
+} from "react-native";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
@@ -10,9 +16,9 @@ import { theme } from "../core/theme";
 import {
   emailValidator,
   passwordValidator,
-  nameValidator
+  nameValidator,
 } from "../core/utils";
-import AnimatedLoader from 'react-native-animated-loader';
+import AnimatedLoader from "react-native-animated-loader";
 import auth, { firebase } from "@react-native-firebase/auth";
 import colors from "../core/colors";
 
@@ -26,16 +32,16 @@ const RegisterScreen = ({ navigation }) => {
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email.value, password.value)
-      .then(userCredentials => {
+      .then((userCredentials) => {
         setLoader(false);
         return userCredentials.user.updateProfile({
-          displayName: name.value
+          displayName: name.value,
         });
       })
       .then(() => {
-        navigation.navigate("SetupProfile")
+        navigation.navigate("SetupProfile");
       })
-      .catch(e => console.error(e.message + "  Register: " + name));
+      .catch((e) => console.error(e.message + "  Register: " + name));
   };
 
   const _onSignUpPressed = () => {
@@ -63,7 +69,7 @@ const RegisterScreen = ({ navigation }) => {
         label="Name"
         returnKeyType="next"
         value={name.value}
-        onChangeText={text => setName({ value: text, error: "" })}
+        onChangeText={(text) => setName({ value: text, error: "" })}
         error={!!name.error}
         errorText={name.error}
       />
@@ -71,7 +77,7 @@ const RegisterScreen = ({ navigation }) => {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: "" })}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -83,13 +89,23 @@ const RegisterScreen = ({ navigation }) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: "" })}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
       />
-      <Button style={{ backgroundColor: colors.accentLight, width: "60%", alignSelf: "center", marginTop: 20, borderColor: colors.primary, borderWidth: 1.5 }}
-        mode="outlined" onPress={_onSignUpPressed}>
+      <Button
+        style={{
+          backgroundColor: colors.accentLight,
+          width: "60%",
+          alignSelf: "center",
+          marginTop: 20,
+          borderColor: colors.primary,
+          borderWidth: 1.5,
+        }}
+        mode="outlined"
+        onPress={_onSignUpPressed}
+      >
         Sign Up
       </Button>
       <View style={styles.row}>
@@ -103,26 +119,27 @@ const RegisterScreen = ({ navigation }) => {
         source={require("../assets/loader.json")}
         overlayColor="rgba(255,255,255,0.75)"
         animationStyle={{ width: 100, height: 100 }}
-        speed={1} />
+        speed={1}
+      />
     </Background>
   );
 };
 
 const styles = StyleSheet.create({
   label: {
-    color: colors.primary
+    color: colors.primary,
   },
   button: {
-    marginTop: 24
+    marginTop: 24,
   },
   row: {
     flexDirection: "row",
-    marginTop: 4
+    marginTop: 4,
   },
   link: {
     fontWeight: "bold",
-    color: colors.primary
-  }
+    color: colors.primary,
+  },
 });
 
 export default RegisterScreen;

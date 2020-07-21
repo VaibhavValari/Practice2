@@ -116,6 +116,7 @@ const CompletedScreen = ({ navigation }) => {
                             <Text style={{fontFamily:"breg", color: "white", paddingBottom: 2, paddingHorizontal: 2 }}>others</Text>
                         </View>
                     </View>
+                    
                 </View>
                 <View style={{
                     borderBottomColor: 'silver',

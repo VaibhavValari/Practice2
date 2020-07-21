@@ -12,10 +12,7 @@ import { Portal } from "react-native-paper";
 
 import { theme } from "../core/theme";
 
-
-
 const ErrorModal = (props) => {
-
   const { toggle } = props;
   const [isVisible, setIsVisible] = useState(false);
   const slide = useRef(new Animated.Value(-400)).current;
@@ -27,23 +24,23 @@ const ErrorModal = (props) => {
       Animated.timing(fade, {
         toValue: 1,
         duration: 10,
-        delay:0,
-        useNativeDriver:true
+        delay: 0,
+        useNativeDriver: true,
       }),
-        Animated.spring(slide, {
-          toValue: 0,
-          duration: 100,
-        })
+      Animated.spring(slide, {
+        toValue: 0,
+        duration: 100,
+      }),
     ]).start();
   };
 
   const slideDownAnimation = () => {
-        Animated.timing(fade, {
-          toValue: 0,
-          duration: 100,
-          delay:500,
-          useNativeDriver:true
-        }).start(() => {
+    Animated.timing(fade, {
+      toValue: 0,
+      duration: 100,
+      delay: 500,
+      useNativeDriver: true,
+    }).start(() => {
       setIsVisible(false);
     });
   };
